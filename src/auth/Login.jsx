@@ -9,6 +9,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -41,7 +42,20 @@ const Login = () => {
       })
       .catch((err) => setError(err.message));
   };
-const [showPassword, setShowPassword] = useState(false);
+  const handlePasswordReset = () => {
+    if (!email) {
+      setError("Enter your email first");
+      return;
+    }
+
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        setError("Reset link sent! Check your inbox 📩");
+      })
+      .catch((err) => setError(err.message));
+  };
+
+  const [showPassword, setShowPassword] = useState(false);
 
   // 🔵 Google Login
   const handleGoogleLogin = () => {
@@ -54,17 +68,16 @@ const [showPassword, setShowPassword] = useState(false);
 
   // 🔐 Setup reCAPTCHA (CORRECT FOR FIREBASE v9)
   const setupRecaptcha = () => {
-  if (!window.recaptchaVerifier) {
-    window.recaptchaVerifier = new RecaptchaVerifier(
-      auth,
-      "recaptcha-container",
-      {
-        size: "invisible",
-      }
-    );
-  }
-};
-
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        {
+          size: "invisible",
+        }
+      );
+    }
+  };
 
   // 📲 Send OTP
   const handleSendOtp = () => {
@@ -101,7 +114,6 @@ const [showPassword, setShowPassword] = useState(false);
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-indigo-300 to-purple-700">
-
       {/* Background animation */}
       <div className="absolute inset-0 overflow-hidden">
         {Array.from({ length: 25 }).map((_, index) => {
@@ -125,7 +137,6 @@ const [showPassword, setShowPassword] = useState(false);
 
       {/* Login Card */}
       <div className="relative z-10 w-[400px] bg-white/20 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-white/30">
-
         <h2 className="text-3xl font-bold text-white text-center mb-2">
           Welcome Back 👋
         </h2>
@@ -144,22 +155,21 @@ const [showPassword, setShowPassword] = useState(false);
               className="w-full p-3 rounded-lg mb-3 outline-none bg-white/90"
             />
 
-          <div className="relative mb-3">
-  <input
-    type={showPassword ? "text" : "password"}
-    placeholder="Password"
-    value={password}
-    onChange={(e) => setPassword(e.target.value)}
-    className="w-full p-3 rounded-lg outline-none bg-white/90 pr-10"
-  />
-  <span
-    onClick={() => setShowPassword(!showPassword)}
-    className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-600"
-  >
-    {showPassword ? <FaEye /> : <FaEyeSlash />}
-  </span>
-</div>
-
+            <div className="relative mb-3">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full p-3 rounded-lg outline-none bg-white/90 pr-10"
+              />
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-600"
+              >
+                {showPassword ? <FaEye /> : <FaEyeSlash />}
+              </span>
+            </div>
 
             <button
               onClick={handleEmailLogin}
@@ -167,14 +177,15 @@ const [showPassword, setShowPassword] = useState(false);
             >
               Login
             </button>
-          <div className="text-right mt-2">
-            <button
-              type="button"
-              className="text-sm text-blue-600 hover:underline"
-            >
-              Forgot Password?
-            </button>
-          </div>
+            <div className="text-right mt-2">
+              <button
+                type="button"
+                onClick={handlePasswordReset}
+                className="text-sm text-blue-600 hover:underline cursor-pointer"
+              >
+                Forgot Password?
+              </button>
+            </div>
             {error && (
               <p className="text-white text-sm mt-3 text-center">{error}</p>
             )}
@@ -184,7 +195,7 @@ const [showPassword, setShowPassword] = useState(false);
               <span className="px-3 text-white/80 text-sm">OR</span>
               <div className="flex-1 h-px bg-white/40"></div>
             </div>
-            
+
             <button
               onClick={handleGoogleLogin}
               className="w-full bg-white text-gray-700 p-3 rounded-lg flex items-center justify-center gap-2 mb-3 font-medium cursor-pointer hover:-translate-y-1 hover:shadow-xl transition-all"
@@ -216,9 +227,7 @@ const [showPassword, setShowPassword] = useState(false);
                   placeholder="Enter mobile number"
                   value={phone}
                   maxLength={10}
-                  onChange={(e) =>
-                    setPhone(e.target.value.replace(/\D/g, ""))
-                  }
+                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
                   className="w-full p-3 rounded-lg mb-4 outline-none bg-white/90"
                 />
 
