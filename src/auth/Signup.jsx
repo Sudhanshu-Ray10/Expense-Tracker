@@ -7,7 +7,7 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
-
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -101,6 +101,9 @@ const Signup = () => {
         setError(error.message);
       });
   };
+const [showPassword, setShowPassword] = useState(false);
+const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-indigo-300 to-purple-700">
@@ -173,22 +176,38 @@ const Signup = () => {
         />
 
         {/* Password */}
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-3 rounded-lg mb-3 outline-none bg-white/90"
-        />
+        <div className="relative mb-3">
+  <input
+    type={showPassword ? "text" : "password"}
+    placeholder="Password"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+    className="w-full p-3 rounded-lg outline-none bg-white/90 pr-10"
+  />
+  <span
+    onClick={() => setShowPassword(!showPassword)}
+    className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-600"
+  >
+    {showPassword ? <FaEye /> : <FaEyeSlash />}
+  </span>
+</div>
 
         {/* Confirm Password */}
-        <input
-          type="password"
-          placeholder="Confirm password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          className="w-full p-3 rounded-lg mb-4 outline-none bg-white/90"
-        />
+        <div className="relative mb-3">
+  <input
+    type={showConfirmPassword ? "text" : "password"}
+    placeholder="Confirm password"
+    value={confirmPassword}
+    onChange={(e) => setConfirmPassword(e.target.value)}
+    className="w-full p-3 rounded-lg outline-none bg-white/90 pr-10"
+  />
+  <span
+    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+    className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-600"
+  >
+    {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+  </span>
+</div>
 
         {/* Signup Button */}
         <button

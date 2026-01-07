@@ -8,6 +8,7 @@ import {
   signInWithPhoneNumber,
 } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -40,6 +41,7 @@ const Login = () => {
       })
       .catch((err) => setError(err.message));
   };
+const [showPassword, setShowPassword] = useState(false);
 
   // 🔵 Google Login
   const handleGoogleLogin = () => {
@@ -142,13 +144,22 @@ const Login = () => {
               className="w-full p-3 rounded-lg mb-3 outline-none bg-white/90"
             />
 
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-3 rounded-lg mb-4 outline-none bg-white/90"
-            />
+          <div className="relative mb-3">
+  <input
+    type={showPassword ? "text" : "password"}
+    placeholder="Password"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+    className="w-full p-3 rounded-lg outline-none bg-white/90 pr-10"
+  />
+  <span
+    onClick={() => setShowPassword(!showPassword)}
+    className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-600"
+  >
+    {showPassword ? <FaEye /> : <FaEyeSlash />}
+  </span>
+</div>
+
 
             <button
               onClick={handleEmailLogin}
@@ -156,7 +167,14 @@ const Login = () => {
             >
               Login
             </button>
-
+          <div className="text-right mt-2">
+            <button
+              type="button"
+              className="text-sm text-blue-600 hover:underline"
+            >
+              Forgot Password?
+            </button>
+          </div>
             {error && (
               <p className="text-white text-sm mt-3 text-center">{error}</p>
             )}
@@ -166,7 +184,7 @@ const Login = () => {
               <span className="px-3 text-white/80 text-sm">OR</span>
               <div className="flex-1 h-px bg-white/40"></div>
             </div>
-
+            
             <button
               onClick={handleGoogleLogin}
               className="w-full bg-white text-gray-700 p-3 rounded-lg flex items-center justify-center gap-2 mb-3 font-medium cursor-pointer hover:-translate-y-1 hover:shadow-xl transition-all"
