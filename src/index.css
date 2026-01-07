@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@keyframes fall {
+  0% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+
+.currency {
+  position: absolute;
+  top: -50px;
+  animation: fall linear infinite;
+}
