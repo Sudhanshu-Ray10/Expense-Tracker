@@ -106,7 +106,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-indigo-300 to-purple-700">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-indigo-300 to-purple-700 px-4">
       {/* Falling currency background */}
       <div className="absolute inset-0 overflow-hidden">
         {Array.from({ length: 25 }).map((_, index) => {
@@ -130,7 +130,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
       </div>
 
       {/* Signup Card */}
-      <div className="relative z-10 w-[420px] bg-white/20 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-white/30">
+      <div className="relative z-10 w-full max-w-[420px] bg-white/20 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-white/30">
         <h2 className="text-3xl font-bold text-white text-center mb-1">
           Create Account
         </h2>
@@ -139,7 +139,7 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
         </p>
 
         {/* Name */}
-        <div className="flex gap-3 mb-3">
+        <div className="flex flex-col sm:flex-row gap-3 mb-3">
           <input
             type="text"
             placeholder="First Name"

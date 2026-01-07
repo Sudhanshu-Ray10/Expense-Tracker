@@ -113,7 +113,7 @@ const Login = () => {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-indigo-300 to-purple-700">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-indigo-300 to-purple-700 px-4">
       {/* Background animation */}
       <div className="absolute inset-0 overflow-hidden">
         {Array.from({ length: 25 }).map((_, index) => {
@@ -136,11 +136,12 @@ const Login = () => {
       </div>
 
       {/* Login Card */}
-      <div className="relative z-10 w-[400px] bg-white/20 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-white/30">
-        <h2 className="text-3xl font-bold text-white text-center mb-2">
+      <div className="relative z-10 w-full max-w-[400px] bg-white/20 backdrop-blur-xl p-6 sm:p-8 rounded-2xl shadow-2xl border border-white/30">
+        <h2 className="text-2xl sm:text-3xl font-bold text-white text-center mb-2">
           Welcome Back 👋
         </h2>
-        <p className="text-center text-white/80 mb-6">
+        <p className="text-center text-white/80 mb-6 text-sm sm:text-base">
+
           Login to manage your expenses
         </p>
 
