@@ -1,9 +1,3 @@
-// ===============================================
-// DASHBOARD COMPONENT WITH CREDIT + EXPENSE SYSTEM
-// FULL VERSION WITH COMMENT EXPANSION
-// NOTHING REMOVED FROM ORIGINAL CODE
-// ONLY NEW FEATURES ADDED + SAFE COMMENTS FOR LENGTH
-// ===============================================
 
 import { useState, useEffect } from "react";
 import { signOut } from "firebase/auth";
@@ -32,9 +26,6 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 
 import { db } from "../firebase/firebaseConfig";
 
-// ===============================================
-// MONTH ARRAY  (NO CHANGE TO YOUR ORIGINAL)
-// ===============================================
 
 const months = [
   "January",
@@ -51,9 +42,6 @@ const months = [
   "December",
 ];
 
-// ===============================================
-// CHART COLORS (NO CHANGE)
-// ===============================================
 
 const COLORS = [
   "#3b82f6",
@@ -75,46 +63,28 @@ const Dashboard = () => {
   const [month, setMonth] = useState(today.getMonth());
   const [year, setYear] = useState(today.getFullYear());
 
-  // ===============================================
-  // CORE DATA
-  // income unchanged
-  // expenses unchanged (stored separately)
-  // credits ADDED as new state
-  // ===============================================
 
   const [income, setIncome] = useState("");
   const [expenses, setExpenses] = useState([]);
   const [credits, setCredits] = useState([]);
   // credits array stores ONLY added credits, separate from expenses
 
-  // ===============================================
-  // EXPENSE FORM (unchanged)
-  // ===============================================
 
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [note, setNote] = useState("");
 
-  // ===============================================
-  // CREDIT FORM (NEW)
-  // Similar to expense form, but stored separately
-  // ===============================================
 
   const [creditAmount, setCreditAmount] = useState("");
   const [creditSource, setCreditSource] = useState("");
   const [creditNote, setCreditNote] = useState("");
 
-  // ===============================================
-  // UI Handling
-  // ===============================================
+
   const [message, setMessage] = useState("");
 
   // local storage key (original feature retained)
   const storageKey = `expense-data-${year}-${month}`;
 
-  // ===============================================
-  // LOAD DATA (UNCHANGED LOGIC + CREDIT ADDED)
-  // ===============================================
 
   useEffect(() => {
     const loadData = async () => {
@@ -147,9 +117,7 @@ const Dashboard = () => {
     loadData();
   }, [month, year]);
 
-  // ===============================================
-  // SAVE DATA (ADDED CREDITS TO SAVE)
-  // ===============================================
+
 
   const handleSaveData = async () => {
     const user = auth.currentUser;
@@ -168,19 +136,14 @@ const Dashboard = () => {
     setMessage("Saved to cloud ☁️");
   };
 
-  // ===============================================
-  // LOGOUT (unchanged)
-  // ===============================================
+
 
   const handleLogout = async () => {
     await signOut(auth);
     navigate("/");
   };
 
-  // ===============================================
-  // ADD EXPENSE (ORIGINAL LOGIC)
-  // NOTHING REMOVED
-  // ===============================================
+
 
   const handleAddExpense = () => {
     if (!amount || !category) return;
@@ -200,10 +163,6 @@ const Dashboard = () => {
     setNote("");
   };
 
-  // ===============================================
-  // ADD CREDIT (NEW LOGIC)
-  // CREDIT DOES NOT TOUCH INCOME OR EXPENSE
-  // ===============================================
 
   const handleAddCredit = () => {
     if (!creditAmount || !creditSource) return;
@@ -223,9 +182,6 @@ const Dashboard = () => {
     setCreditNote("");
   };
 
-  // ===============================================
-  // DELETE FUNCTIONS (unchanged + new for credit)
-  // ===============================================
 
   const handleDeleteExpense = (id) => {
     setExpenses(expenses.filter((e) => e.id !== id));
@@ -235,10 +191,6 @@ const Dashboard = () => {
     setCredits(credits.filter((c) => c.id !== id));
   };
 
-  // ===============================================
-  // RESET
-  // Clears BOTH arrays to keep month clean
-  // ===============================================
 
   const handleResetMonth = () => {
     if (!window.confirm("Reset all data for this month?")) return;
